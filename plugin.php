@@ -28,6 +28,7 @@ function create_information_board_page() {
         // Store template file
         if ($page_id) {
             update_option('information_board_page_id', $page_id);
+            update_post_meta($page_id, '_wp_page_template', 'information-board-template.php');
         }
     }
 }
