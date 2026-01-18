@@ -61,6 +61,7 @@ $sponsors = VTC_Sponsor_Post_Type::get_sponsors_by_type();
             width: calc((100% - (5 * 30px)) / 6);
             max-width: 250px;
             min-width: 150px;
+            height: 150px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -70,6 +71,8 @@ $sponsors = VTC_Sponsor_Post_Type::get_sponsors_by_type();
         .sponsor-logo {
             max-width: 100%;
             max-height: 100%;
+            width: auto;
+            height: auto;
             object-fit: contain;
             transition: transform 0.3s ease;
         }
@@ -91,6 +94,7 @@ $sponsors = VTC_Sponsor_Post_Type::get_sponsors_by_type();
         @media (max-width: 1024px) {
             .sponsor-item {
                 width: calc((100% - (3 * 20px)) / 4);
+                height: 120px;
             }
             
             .sponsorboard-container {
@@ -102,6 +106,7 @@ $sponsors = VTC_Sponsor_Post_Type::get_sponsors_by_type();
         @media (max-width: 768px) {
             .sponsor-item {
                 width: calc((100% - (2 * 15px)) / 3);
+                height: 100px;
             }
             
             .sponsorboard-container {
