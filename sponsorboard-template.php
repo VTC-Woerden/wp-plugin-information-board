@@ -59,8 +59,8 @@ $sponsors = VTC_Sponsor_Post_Type::get_sponsors_by_type();
         
         .sponsor-item {
             width: calc((100% - (5 * 30px)) / 6);
-            max-width: 250px;
-            min-width: 150px;
+            min-width: 200px;
+            max-width: 300px;
             height: 150px;
             display: flex;
             align-items: center;
