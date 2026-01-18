@@ -61,6 +61,9 @@ class VTC_Informatiebord_Plugin {
     private function init_classes() {
         require_once VTC_INFORMATIEBORD_PATH . 'includes/class-sponsor-post-type.php';
         VTC_Sponsor_Post_Type::get_instance();
+        
+        require_once VTC_INFORMATIEBORD_PATH . 'includes/class-sponsor-shortcodes.php';
+        VTC_Sponsor_Shortcodes::get_instance();
     }
     
     /**

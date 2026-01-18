@@ -7,7 +7,9 @@ A professional WordPress plugin for managing information boards and sponsors.
 - Custom information board page with custom template
 - Sponsor custom post type with full CRUD operations
 - Sponsor taxonomy (Normal/Hoofd sponsors)
-- Media upload for sponsor logos
+- Featured image support for sponsor logos
+- Full-screen sponsorboard display page
+- Sponsor shortcodes for embedding sponsors anywhere
 - Modern OOP architecture
 
 ## File Structure
@@ -16,11 +18,15 @@ A professional WordPress plugin for managing information boards and sponsors.
 wp-plugin-information-board/
 ├── plugin.php                          # Main plugin file
 ├── information-board-template.php      # Custom page template
+├── sponsorboard-template.php           # Full-screen sponsor display
 ├── includes/
-│   └── class-sponsor-post-type.php    # Sponsor post type class
+│   ├── class-sponsor-post-type.php    # Sponsor post type class
+│   └── class-sponsor-shortcodes.php   # Sponsor shortcodes
 ├── assets/
+│   ├── css/
+│   │   └── sponsors.css               # Shortcode styles
 │   └── js/
-│       └── sponsor-admin.js           # Admin JavaScript
+│       └── sponsors-rotating.js       # Rotating shortcode JS
 └── README.md
 ```
 
@@ -43,8 +49,70 @@ The plugin follows WordPress best practices with:
 2. Click **Nieuwe toevoegen**
 3. Enter sponsor name
 4. Select sponsor type (Normale Sponsor or Hoofd Sponsor)
-5. Upload logo via media library
+5. Set featured image as sponsor logo
 6. Publish
+
+### Sponsorboard Page
+
+A full-screen digital sponsor board is automatically created at `/sponsorboard`. Features:
+- Clean, distraction-free display
+- 6 sponsors per row
+- Responsive grid layout
+- All sponsors displayed with equal sizing
+- Perfect for TV/monitor displays
+
+### Shortcodes
+
+#### Grid Shortcode (All Sponsors Visible)
+
+Display all sponsors in a grid layout:
+
+```
+[sponsors_grid]
+[sponsors_grid columns="6"]
+[sponsors_grid columns="4" type="hoofd-sponsor"]
+```
+
+**Parameters:**
+- `columns` - Number of sponsors per row (default: 6)
+- `type` - Filter by type: `normale-sponsor`, `hoofd-sponsor`, or empty for all
+
+**Examples:**
+```
+[sponsors_grid]                                    # Show all sponsors, 6 per row
+[sponsors_grid columns="4"]                        # Show all sponsors, 4 per row
+[sponsors_grid type="hoofd-sponsor"]               # Show only main sponsors
+[sponsors_grid columns="3" type="normale-sponsor"] # Show normal sponsors, 3 per row
+```
+
+#### Rotating Shortcode (One Row at a Time)
+
+Display sponsors one row at a time with automatic rotation:
+
+```
+[sponsors_rotating]
+[sponsors_rotating per_row="6" interval="5"]
+[sponsors_rotating per_row="4" interval="10" type="normale-sponsor"]
+```
+
+**Parameters:**
+- `per_row` - Number of sponsors per row (default: 6)
+- `interval` - Seconds between rotations (default: 5)
+- `type` - Filter by type: `normale-sponsor`, `hoofd-sponsor`, or empty for all
+
+**Examples:**
+```
+[sponsors_rotating]                                      # Rotate all sponsors, 6 per row, every 5 seconds
+[sponsors_rotating interval="10"]                        # Rotate every 10 seconds
+[sponsors_rotating per_row="4" interval="8"]            # 4 per row, rotate every 8 seconds
+[sponsors_rotating type="hoofd-sponsor" interval="15"]  # Only main sponsors, rotate every 15 seconds
+```
+
+**Features:**
+- Smooth fade transitions between rows
+- Automatically groups sponsors into rows
+- Responsive design
+- Only loads when shortcode is present
 
 ### Programmatic Access
 
@@ -57,6 +125,9 @@ $main_sponsors = VTC_Sponsor_Post_Type::get_sponsors_by_type('hoofd-sponsor');
 
 // Get sponsor logo URL
 $logo_url = VTC_Sponsor_Post_Type::get_logo_url($post_id);
+
+// Get logo in specific size
+$logo_thumb = VTC_Sponsor_Post_Type::get_logo_url($post_id, 'medium');
 ```
 
 ## Development
